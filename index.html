@@ -5,6 +5,7 @@
   <script src="js/constants.js"></script>
   <script type="module" src="js/data.js"></script>
   <script type="module" src="js/picture.js"></script>
+  <script type="module" src="js/bid-picture.js"></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" href="css/normalize.css">
@@ -167,6 +168,14 @@
             <li class="social__comment">
               <img class="social__picture" src="img/avatar-3.svg" alt="Аватар комментатора фотографии" width="35" height="35">
                <p class="social__text">Да это фоташоп!!!!!!!!</p>
+            </li>
+            <li class="social__comment">
+              <img
+                  class="social__picture"
+                  src="{{аватар}}"
+                  alt="{{имя комментатора}}"
+                  width="35" height="35">
+              <p class="social__text">{{текст комментария}}</p>
             </li>
           </ul>
 
