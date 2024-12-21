@@ -1,16 +1,16 @@
 import {getRandomInteger} from './util.js';
 
-const ids = [];
+const IDS = [];
 for (let counter = 1; counter <= 25; counter++) {
-  ids.push(counter);
+  IDS.push(counter);
 }
 
-const urls = [];
+const URLS = [];
 for (let counter = 1; counter <= 25; counter++) {
-  urls.push(`photos/${counter}.jpg`);
+  URLS.push(`photos/${counter}.jpg`);
 }
 
-const descriptions = [
+const DESCRIPTIONS = [
   'Хайповая фотография',
   'Каждый день — новое приключение',
   'Здесь и сейчас',
@@ -23,7 +23,7 @@ const descriptions = [
   'Эстетик',
 ];
 
-const messages = [
+const MESSAGES = [
   'Всё отлично!',
   'В целом всё неплохо.Но не всё.',
   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра.В конце концов это просто непрофессионально.',
@@ -32,7 +32,7 @@ const messages = [
   'Лица у людей на фотке перекошены, как будто их избивают.Как можно было поймать такой неудачный момент ?!',
 ];
 
-const names = [
+const NAMES = [
   'Павел',
   'Мария',
   'Артем',
@@ -48,8 +48,8 @@ const names = [
 const createComment = (commentId) => {
   const randomCommentId = commentId;
   const randomAvatar = `img/avatar-${getRandomInteger(1, 6)}.svg`;
-  const randomMessage = messages[getRandomInteger(0, messages.length - 1)];
-  const randomName = names[getRandomInteger(0, names.length - 1)];
+  const randomMessage = MESSAGES[getRandomInteger(0, MESSAGES.length - 1)];
+  const randomName = NAMES[getRandomInteger(0, NAMES.length - 1)];
   return {
     id: randomCommentId,
     avatar: randomAvatar,
@@ -73,15 +73,15 @@ const createComments = () => {
 };
 
 const createPost = () => {
-  const randomIdIndex = getRandomInteger(0, ids.length - 1);
-  const randomId = ids[randomIdIndex];
-  ids.splice(randomIdIndex, 1);
+  const randomIdIndex = getRandomInteger(0, IDS.length - 1);
+  const randomId = IDS[randomIdIndex];
+  IDS.splice(randomIdIndex, 1);
 
-  const randomUrlIndex = getRandomInteger(0, urls.length - 1);
-  const randomUrl = urls[randomUrlIndex];
-  urls.splice(randomUrlIndex, 1);
+  const randomUrlIndex = getRandomInteger(0, URLS.length - 1);
+  const randomUrl = URLS[randomUrlIndex];
+  URLS.splice(randomUrlIndex, 1);
 
-  const randomDescription = descriptions[getRandomInteger(0, descriptions.length - 1)];
+  const randomDescription = DESCRIPTIONS[getRandomInteger(0, DESCRIPTIONS.length - 1)];
 
   const randomLikes = getRandomInteger(15, 200);
 

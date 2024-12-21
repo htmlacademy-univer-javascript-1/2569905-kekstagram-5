@@ -2,6 +2,7 @@ import './util.js';
 import {createPost} from './constants.js';
 import {renderPictures} from './picture.js';
 import {renderBigPicture} from './big-picture.js';
+import {formValidation} from './load-picture.js';
 
 
 const posts = [];
@@ -26,4 +27,4 @@ const handlePictureClick = function(evt) {
 
 picturesContainer.addEventListener('click', handlePictureClick);
 
-
+formValidation();
