@@ -1,4 +1,4 @@
-import { sendData } from './api.js';
+import { sendData } from './api-new.js';
 import { applyEffect } from './effects.js';
 //import { showSuccessForm, showErrorForm } from './result-massage.js';
 
@@ -164,4 +164,4 @@ const formValidation = () => {
 };
 
 
-export { formValidation };
+export { formValidation, closeForm };
