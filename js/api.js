@@ -1,5 +1,6 @@
+
 const getData = (onSuccess, onFail) => {
-  fetch('https://29.javascript.htmlacademy.pro/kekstagram')
+  fetch('https://29.javascript.htmlacademy.pro/kekstagram/data')
     .then((response) => response.json())
     .then ((data) => {
       onSuccess(data);
@@ -11,10 +12,10 @@ const getData = (onSuccess, onFail) => {
 
 const sendData = (onSuccess, onFail, body) => {
   fetch(
-    'https://29.javascript.htmlacademy.pro/kekstagram',
+    'https://29.javascript.htmlacademy.pro/kekstagram/',
     {
       method: 'POST',
-      body,
+      body: body,
     },
   )
     .then((response) => {
@@ -29,4 +30,4 @@ const sendData = (onSuccess, onFail, body) => {
     });
 };
 
-export { getData, sendData };
+export { sendData, getData };
