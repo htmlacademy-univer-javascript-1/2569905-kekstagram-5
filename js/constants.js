@@ -1,4 +1,4 @@
-import {getRandomInteger} from './util.js';
+import { getRandomInteger } from './util.js';
 
 const IDS = [];
 for (let counter = 1; counter <= 25; counter++) {
@@ -94,4 +94,4 @@ const createPost = () => {
   };
 };
 
-export {createPost};
+export { createPost };

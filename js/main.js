@@ -1,8 +1,9 @@
 import './util.js';
-import {createPost} from './constants.js';
-import {renderPictures} from './picture.js';
-import {renderBigPicture} from './big-picture.js';
-import {formValidation} from './load-picture.js';
+//import './pictures-sort.js';
+import { createPost } from './constants.js';
+import { renderPictures } from './picture.js';
+import { renderBigPicture } from './big-picture.js';
+import { formValidation } from './load-form.js';
 
 
 const posts = [];

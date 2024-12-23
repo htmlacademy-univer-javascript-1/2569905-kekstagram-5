@@ -1,3 +1,8 @@
+import { sendData } from './api.js';
+import { applyEffect } from './effects.js';
+//import { showSuccessForm, showErrorForm } from './result-massage.js';
+
+
 const INIT_SCALE = 100;
 const SCALE_STEP = 25;
 const MAX_SCALE = 100;
@@ -5,33 +10,7 @@ const MIN_SCALE = 25;
 const MAX_COMMENT_LENGTH = 140;
 const MAX_HASHTAGS = 5;
 const HASHTAG_PATTERN = /^#[A-Za-z0-9]+$/;
-const UPLOAD_URL = 'https://29.javascript.htmlacademy.pro/kekstagram/data';
 
-// Функция применения фильтра к изображению
-const applyEffect = (image, effect, value) => {
-  switch (effect) {
-    case 'chrome':
-      image.style.filter = `grayscale(${value / 100})`;
-      break;
-    case 'sepia':
-      image.style.filter = `sepia(${value / 100})`;
-      break;
-    case 'marvin':
-      image.style.filter = `invert(${value}%)`;
-      break;
-    case 'phobos':
-      image.style.filter = `blur(${(value / 100) * 3}px)`;
-      break;
-    case 'heat':
-      image.style.filter = `brightness(${1 + (value / 100) * 2})`;
-      break;
-    default:
-      image.style.filter = '';
-      break;
-  }
-};
-
-// Функция закрытия формы
 const closeForm = (elements) => {
   const { overlay, body, uploadInput, hashtagInput, descriptionInput, pristine, slider, imagePreview } = elements;
   overlay.classList.add('hidden');
@@ -47,7 +26,6 @@ const closeForm = (elements) => {
   elements.scaleHidden.value = INIT_SCALE;
 };
 
-// Основная функция валидации формы
 const formValidation = () => {
   const FORM = document.querySelector('.img-upload__form');
   const UPLOAD_INPUT = document.querySelector('.img-upload__input');
@@ -157,13 +135,17 @@ const formValidation = () => {
   });
 
   // Отправка формы
+
   FORM.addEventListener('submit', (evt) => {
     evt.preventDefault();
+
+    sendData();
+
     if (pristine.validate()) {
       const submitButton = FORM.querySelector('.img-upload__submit');
       submitButton.disabled = true;
 
-      fetch(UPLOAD_URL, {
+      fetch('https://29.javascript.htmlacademy.pro/kekstagram', {
         method: 'POST',
         body: new FormData(FORM),
       })
@@ -174,17 +156,12 @@ const formValidation = () => {
           } else {
             throw new Error('Ошибка отправки данных');
           }
-        })
-        .catch(() => {
-          throw new Error('Ошибка!');
-        })
-        .finally(() => {
-          submitButton.disabled = false;
         });
     } else {
       throw new Error('Форма содержит ошибки');
     }
   });
 };
+
 
 export { formValidation };
