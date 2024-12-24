@@ -1,12 +1,8 @@
-//import { FORM } from "./load-form.";
 import { isEscKey } from './util.js';
 
 const FORM = document.querySelector('.img-upload__form');
 const BODY = document.querySelector('body');
-//const loadImgBtnElement = FORM.querySelector('#upload-file');
 const editingWindowElement = FORM.querySelector('.img-upload__overlay');
-//const closeBtnElement = editingWindowElement.querySelector('#upload-cancel');
-//const submitBtnElement = FORM.querySelector('.img-upload__submit');
 const successFormTemplate = document.querySelector('#success').content.querySelector('.success');
 const errorFormTemplate = document.querySelector('#error').content.querySelector('.error');
 const errorBtnElement = errorFormTemplate.querySelector('.error__button');

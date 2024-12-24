@@ -1,6 +1,6 @@
-import { sendData } from './api-new.js';
+import { sendData } from './api.js';
 import { applyEffect } from './effects.js';
-//import { showSuccessForm, showErrorForm } from './result-massage.js';
+import { showSuccessForm, showErrorForm } from './result-massage.js';
 
 
 const INIT_SCALE = 100;
@@ -152,13 +152,13 @@ const formValidation = () => {
         .then((response) => {
           if (response.ok) {
             closeForm({ overlay: OVERLAY, body: BODY, uploadInput: UPLOAD_INPUT, hashtagInput: HASHTAG_INPUT, descriptionInput: DESCRIPTION_INPUT, pristine, slider: SLIDER, imagePreview: IMAGE_PREVIEW, scaleValue: SCALE_VALUE, scaleHidden: SCALE_HIDDEN });
-            //console.log('Успешно отправлено!');
+            showSuccessForm();
           } else {
-            throw new Error('Ошибка отправки данных');
+            showErrorForm('Ошибка отправки данных');
           }
         });
     } else {
-      throw new Error('Форма содержит ошибки');
+      showErrorForm('Форма содержит ошибки');
     }
   });
 };
