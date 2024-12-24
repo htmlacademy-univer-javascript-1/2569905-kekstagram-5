@@ -1,3 +1,5 @@
+const FORM = document.querySelector('.img-upload__form');
+
 const applyEffect = (image, effect, value) => {
   switch (effect) {
     case 'chrome':
@@ -21,5 +23,5 @@ const applyEffect = (image, effect, value) => {
   }
 };
 
-export { applyEffect };
+export { applyEffect, FORM };
 

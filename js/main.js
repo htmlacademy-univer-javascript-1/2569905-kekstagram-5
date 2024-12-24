@@ -1,5 +1,5 @@
 import './util.js';
-import { createPost } from './constants.js';
+import { createPost } from './data.js';
 import { renderPictures } from './picture.js';
 import { renderBigPicture } from './big-picture.js';
 import { formValidation } from './load-form.js';

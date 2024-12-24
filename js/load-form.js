@@ -1,4 +1,3 @@
-import { sendData } from './api.js';
 import { applyEffect } from './effects.js';
 import { showSuccessForm, showErrorForm } from './result-massage.js';
 
@@ -10,6 +9,7 @@ const MIN_SCALE = 25;
 const MAX_COMMENT_LENGTH = 140;
 const MAX_HASHTAGS = 5;
 const HASHTAG_PATTERN = /^#[A-Za-z0-9]+$/;
+const BASE_URL = 'https://29.javascript.htmlacademy.pro/kekstagram';
 
 const closeForm = (elements) => {
   const { overlay, body, uploadInput, hashtagInput, descriptionInput, pristine, slider, imagePreview } = elements;
@@ -139,13 +139,11 @@ const formValidation = () => {
   FORM.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
-    sendData();
-
     if (pristine.validate()) {
       const submitButton = FORM.querySelector('.img-upload__submit');
       submitButton.disabled = true;
 
-      fetch('https://29.javascript.htmlacademy.pro/kekstagram', {
+      fetch(BASE_URL, {
         method: 'POST',
         body: new FormData(FORM),
       })
