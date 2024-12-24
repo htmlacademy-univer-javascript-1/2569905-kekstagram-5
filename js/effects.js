@@ -1,4 +1,4 @@
-const FORM = document.querySelector('.img-upload__form');
+const form = document.querySelector('.img-upload__form');
 
 const applyEffect = (image, effect, value) => {
   switch (effect) {
@@ -23,5 +23,5 @@ const applyEffect = (image, effect, value) => {
   }
 };
 
-export { applyEffect, FORM };
+export { applyEffect, form };
 

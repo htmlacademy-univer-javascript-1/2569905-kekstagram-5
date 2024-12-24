@@ -1,4 +1,4 @@
-import { applyEffect } from './effects.js';
+import { applyEffect, form } from './effects.js';
 import { showSuccessForm, showErrorForm } from './result-massage.js';
 
 
@@ -27,23 +27,22 @@ const closeForm = (elements) => {
 };
 
 const formValidation = () => {
-  const FORM = document.querySelector('.img-upload__form');
-  const UPLOAD_INPUT = document.querySelector('.img-upload__input');
-  const OVERLAY = document.querySelector('.img-upload__overlay');
-  const BODY = document.body;
-  const IMAGE_PREVIEW = document.querySelector('.img-upload__preview img');
-  const SCALE_VALUE = document.querySelector('.scale__control--value');
-  const SCALE_HIDDEN = FORM.querySelector('input[name="scale"]');
-  const HASHTAG_INPUT = document.querySelector('.text__hashtags');
-  const DESCRIPTION_INPUT = document.querySelector('.text__description');
-  const CANCEL_BUTTON = document.querySelector('#upload-cancel');
-  const SLIDER = document.querySelector('.effect-level__slider');
-  const EFFECT_VALUE_INPUT = document.querySelector('.effect-level__value');
-  const EFFECT_RADIOS = document.querySelectorAll('.effects__radio');
+  const uploadInput = document.querySelector('.img-upload__input');
+  const overlay = document.querySelector('.img-upload__overlay');
+  const body = document.body;
+  const imagePreview = document.querySelector('.img-upload__preview img');
+  const scaleValue = document.querySelector('.scale__control--value');
+  const scaleHidden = form.querySelector('input[name="scale"]');
+  const hashtagInput = document.querySelector('.text__hashtags');
+  const descriptionInput = document.querySelector('.text__description');
+  const cancelButton = document.querySelector('#upload-cancel');
+  const slider = document.querySelector('.effect-level__slider');
+  const effectValueInport = document.querySelector('.effect-level__value');
+  const effectsRadio = document.querySelectorAll('.effects__radio');
 
   let currentScale = INIT_SCALE;
 
-  const pristine = new Pristine(FORM, {
+  const pristine = new Pristine(form, {
     classTo: 'form-group',
     errorClass: 'has-danger',
     successClass: 'has-success',
@@ -53,7 +52,7 @@ const formValidation = () => {
   });
 
   // Валидация хэштегов
-  pristine.addValidator(HASHTAG_INPUT, (value) => {
+  pristine.addValidator(hashtagInput, (value) => {
     const hashtags = value.split(' ').filter(Boolean);
     const uniqueHashtags = new Set(hashtags);
     return (
@@ -64,36 +63,36 @@ const formValidation = () => {
   }, 'Некорректные хэштеги');
 
   // Валидация комментария
-  pristine.addValidator(DESCRIPTION_INPUT, (value) => value.length <= MAX_COMMENT_LENGTH, `Максимальная длина комментария ${MAX_COMMENT_LENGTH} символов`);
+  pristine.addValidator(descriptionInput, (value) => value.length <= MAX_COMMENT_LENGTH, `Максимальная длина комментария ${MAX_COMMENT_LENGTH} символов`);
 
   // Настройка слайдера
-  noUiSlider.create(SLIDER, {
+  noUiSlider.create(slider, {
     start: [100],
     connect: [true, false],
     range: { min: 0, max: 100 },
     step: 1,
   });
 
-  SLIDER.noUiSlider.on('update', ([value]) => {
+  slider.noUiSlider.on('update', ([value]) => {
     const selectedEffect = document.querySelector('.effects__radio:checked').value;
-    EFFECT_VALUE_INPUT.value = value;
-    applyEffect(IMAGE_PREVIEW, selectedEffect, value);
+    effectValueInport.value = value;
+    applyEffect(imagePreview, selectedEffect, value);
   });
 
-  EFFECT_RADIOS.forEach((radio) => {
+  effectsRadio.forEach((radio) => {
     radio.addEventListener('change', () => {
       const effect = radio.value;
-      SLIDER.noUiSlider.set([100]);
-      EFFECT_VALUE_INPUT.value = 100;
-      applyEffect(IMAGE_PREVIEW, effect, 100);
+      slider.noUiSlider.set([100]);
+      effectValueInport.value = 100;
+      applyEffect(imagePreview, effect, 100);
     });
   });
 
   // Масштаб изображения
   const updateScale = () => {
-    SCALE_VALUE.value = `${currentScale}%`;
-    SCALE_HIDDEN.value = currentScale;
-    IMAGE_PREVIEW.style.transform = `scale(${currentScale / 100})`;
+    scaleValue.value = `${currentScale}%`;
+    scaleHidden.value = currentScale;
+    imagePreview.style.transform = `scale(${currentScale / 100})`;
   };
 
 
@@ -112,44 +111,43 @@ const formValidation = () => {
   });
 
   // Открытие формы
-  UPLOAD_INPUT.addEventListener('change', () => {
-    OVERLAY.classList.remove('hidden');
-    BODY.classList.add('modal-open');
-    const file = UPLOAD_INPUT.files[0];
+  uploadInput.addEventListener('change', () => {
+    overlay.classList.remove('hidden');
+    body.classList.add('modal-open');
+    const file = uploadInput.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        IMAGE_PREVIEW.src = e.target.result;
+        imagePreview.src = e.target.result;
       };
       reader.readAsDataURL(file);
     }
   });
 
   // Закрытие формы
-  CANCEL_BUTTON.addEventListener('click', () => closeForm({ overlay: OVERLAY, body: BODY, uploadInput: UPLOAD_INPUT, hashtagInput: HASHTAG_INPUT, descriptionInput: DESCRIPTION_INPUT, pristine, slider: SLIDER, imagePreview: IMAGE_PREVIEW, scaleValue: SCALE_VALUE, scaleHidden: SCALE_HIDDEN }));
+  cancelButton.addEventListener('click', () => closeForm({ overlay: overlay, body: body, uploadInput: uploadInput, hashtagInput: hashtagInput, descriptionInput: descriptionInput, pristine, slider: slider, imagePreview: imagePreview, scaleValue: scaleValue, scaleHidden: scaleHidden }));
 
   document.addEventListener('keydown', (evt) => {
-    if (evt.key === 'Escape' && ![UPLOAD_INPUT, HASHTAG_INPUT, DESCRIPTION_INPUT].includes(document.activeElement)) {
-      closeForm({ overlay: OVERLAY, body: BODY, uploadInput: UPLOAD_INPUT, hashtagInput: HASHTAG_INPUT, descriptionInput: DESCRIPTION_INPUT, pristine, slider: SLIDER, imagePreview: IMAGE_PREVIEW, scaleValue: SCALE_VALUE, scaleHidden: SCALE_HIDDEN });
+    if (evt.key === 'Escape' && ![uploadInput, hashtagInput, descriptionInput].includes(document.activeElement)) {
+      closeForm({ overlay: overlay, body: body, uploadInput: uploadInput, hashtagInput: hashtagInput, descriptionInput: descriptionInput, pristine, slider: slider, imagePreview: imagePreview, scaleValue: scaleValue, scaleHidden: scaleHidden });
     }
   });
 
   // Отправка формы
-
-  FORM.addEventListener('submit', (evt) => {
+  form.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
     if (pristine.validate()) {
-      const submitButton = FORM.querySelector('.img-upload__submit');
+      const submitButton = form.querySelector('.img-upload__submit');
       submitButton.disabled = true;
 
       fetch(BASE_URL, {
         method: 'POST',
-        body: new FormData(FORM),
+        body: new FormData(form),
       })
         .then((response) => {
           if (response.ok) {
-            closeForm({ overlay: OVERLAY, body: BODY, uploadInput: UPLOAD_INPUT, hashtagInput: HASHTAG_INPUT, descriptionInput: DESCRIPTION_INPUT, pristine, slider: SLIDER, imagePreview: IMAGE_PREVIEW, scaleValue: SCALE_VALUE, scaleHidden: SCALE_HIDDEN });
+            closeForm({ overlay: overlay, body: body, uploadInput: uploadInput, hashtagInput: hashtagInput, descriptionInput: descriptionInput, pristine, slider: slider, imagePreview: imagePreview, scaleValue: scaleValue, scaleHidden: scaleHidden });
             showSuccessForm();
           } else {
             showErrorForm('Ошибка отправки данных');

@@ -5,18 +5,19 @@ const renderPictures = function(picturesData) {
 
   picturesData.forEach((picture) => {
     const pictureElement = template.cloneNode(true);
-    const img = pictureElement.querySelector('.picture__img');
-    const likes = pictureElement.querySelector('.picture__likes');
-    const comments = pictureElement.querySelector('.picture__comments');
+    const pictureImg = pictureElement.querySelector('.picture__img');
+    const likesCount = pictureElement.querySelector('.picture__likes');
+    const commentsCount = pictureElement.querySelector('.picture__comments');
 
     pictureElement.querySelector('.picture').setAttribute('data-id', picture.id);
 
-    img.src = picture.url;
-    img.alt = picture.description;
-    likes.textContent = picture.likes;
-    comments.textContent = picture.comments;
+    pictureImg.src = picture.url;
+    pictureImg.alt = picture.description;
+    likesCount.textContent = picture.likes;
+    commentsCount.textContent = picture.comments.length;
     fragment.appendChild(pictureElement);
   });
   picturesContainer.appendChild(fragment);
 };
+
 export { renderPictures };
