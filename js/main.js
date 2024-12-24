@@ -1,8 +1,8 @@
 import './util.js';
-import {createPost} from './constants.js';
-import {renderPictures} from './picture.js';
-import {renderBigPicture} from './big-picture.js';
-
+import { createPost } from './constants.js';
+import { renderPictures } from './picture.js';
+import { renderBigPicture } from './big-picture.js';
+import { formValidation } from './load-form.js';
 
 const posts = [];
 for (let i = 0; i < 25; i++) {
@@ -26,4 +26,5 @@ const handlePictureClick = function(evt) {
 
 picturesContainer.addEventListener('click', handlePictureClick);
 
+formValidation();
 
