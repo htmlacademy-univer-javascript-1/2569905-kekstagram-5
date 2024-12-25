@@ -1,7 +1,6 @@
 const renderBigPicture = function (picture) {
   const bigPicture = document.querySelector('.big-picture');
   const body = document.body;
-
   const bigPictureImg = bigPicture.querySelector('.big-picture__img img');
   const pictureCaption = bigPicture.querySelector('.social__caption');
   const likesCount = bigPicture.querySelector('.likes-count');

@@ -4,7 +4,6 @@ import { renderBigPicture } from './big-picture-render.js';
 import { formValidation } from './load-form.js';
 import { getData } from './api.js';
 
-
 const picturesContainer = document.querySelector('.pictures');
 let posts = [];
 

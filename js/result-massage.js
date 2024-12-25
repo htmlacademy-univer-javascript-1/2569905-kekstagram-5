@@ -1,12 +1,12 @@
+import { form } from './effects.js';
 import { isEscKey } from './util.js';
 
-const FORM = document.querySelector('.img-upload__form');
-const BODY = document.querySelector('body');
-const editingWindowElement = FORM.querySelector('.img-upload__overlay');
+const body = document.querySelector('body');
+const editingWindowElement = form.querySelector('.img-upload__overlay');
 const successFormTemplate = document.querySelector('#success').content.querySelector('.success');
 const errorFormTemplate = document.querySelector('#error').content.querySelector('.error');
-const errorBtnElement = errorFormTemplate.querySelector('.error__button');
-const successBtnElement = successFormTemplate.querySelector('.success__button');
+const errorButtonElement = errorFormTemplate.querySelector('.error__button');
+const successButtonElement = successFormTemplate.querySelector('.success__button');
 
 const outOfFormHandler = (evt) => {
   if (evt.target === successFormTemplate && evt.target !== successFormTemplate.querySelector('.success__inner')) {
@@ -31,37 +31,37 @@ const errorKeydownHandler = (evt) => {
   }
 };
 
-const successBtnHandler = () => hideSuccessForm();
-const errorBtnHandler = () => hideErrorForm();
+const successButtonHandler = () => hideSuccessForm();
+const errorButtonHandler = () => hideErrorForm();
 
 function hideSuccessForm() {
   document.removeEventListener('click', outOfFormHandler);
   document.removeEventListener('keydown', successKeydownHandler);
-  BODY.removeChild(successFormTemplate);
-  successBtnElement.removeEventListener('click', successBtnHandler);
+  body.removeChild(successFormTemplate);
+  successButtonElement.removeEventListener('click', successButtonHandler);
 }
 
 function hideErrorForm() {
   editingWindowElement.classList.remove('hidden');
-  BODY.removeChild(errorFormTemplate);
-  errorBtnElement.removeEventListener('click', errorBtnHandler);
+  body.removeChild(errorFormTemplate);
+  errorButtonElement.removeEventListener('click', errorButtonHandler);
   document.removeEventListener('click', outOfFormHandler);
   document.removeEventListener('keydown', errorKeydownHandler);
 }
 
 const showSuccessForm = () => {
-  successBtnElement.addEventListener('click', successBtnHandler);
-  BODY.appendChild(successFormTemplate);
+  successButtonElement.addEventListener('click', successButtonHandler);
+  body.appendChild(successFormTemplate);
   document.addEventListener('click', outOfFormHandler);
   document.addEventListener('keydown', successKeydownHandler);
 };
 
 const showErrorForm = (message) => {
   editingWindowElement.classList.add('hidden');
-  errorBtnElement.textContent = 'Попробовать ещё раз';
+  errorButtonElement.textContent = 'Попробовать ещё раз';
   errorFormTemplate.querySelector('.error__title').textContent = message;
-  errorBtnElement.addEventListener('click', errorBtnHandler);
-  BODY.appendChild(errorFormTemplate);
+  errorButtonElement.addEventListener('click', errorButtonHandler);
+  body.appendChild(errorFormTemplate);
   document.addEventListener('click', outOfFormHandler);
   document.addEventListener('keydown', errorKeydownHandler);
 };

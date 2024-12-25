@@ -1,7 +1,6 @@
 import { applyEffect, form } from './effects.js';
 import { showSuccessForm, showErrorForm } from './result-massage.js';
 
-
 const INIT_SCALE = 100;
 const SCALE_STEP = 25;
 const MAX_SCALE = 100;
@@ -51,7 +50,6 @@ const formValidation = () => {
     errorTextClass: 'text-help',
   });
 
-  // Валидация хэштегов
   pristine.addValidator(hashtagInput, (value) => {
     const hashtags = value.split(' ').filter(Boolean);
     const uniqueHashtags = new Set(hashtags);
@@ -62,10 +60,8 @@ const formValidation = () => {
     );
   }, 'Некорректные хэштеги');
 
-  // Валидация комментария
   pristine.addValidator(descriptionInput, (value) => value.length <= MAX_COMMENT_LENGTH, `Максимальная длина комментария ${MAX_COMMENT_LENGTH} символов`);
 
-  // Настройка слайдера
   noUiSlider.create(slider, {
     start: [100],
     connect: [true, false],
@@ -88,13 +84,11 @@ const formValidation = () => {
     });
   });
 
-  // Масштаб изображения
   const updateScale = () => {
     scaleValue.value = `${currentScale}%`;
     scaleHidden.value = currentScale;
     imagePreview.style.transform = `scale(${currentScale / 100})`;
   };
-
 
   document.querySelector('.scale__control--smaller').addEventListener('click', () => {
     if (currentScale > MIN_SCALE) {
@@ -110,7 +104,6 @@ const formValidation = () => {
     }
   });
 
-  // Открытие формы
   uploadInput.addEventListener('change', () => {
     overlay.classList.remove('hidden');
     body.classList.add('modal-open');
@@ -124,7 +117,6 @@ const formValidation = () => {
     }
   });
 
-  // Закрытие формы
   cancelButton.addEventListener('click', () => closeForm({ overlay: overlay, body: body, uploadInput: uploadInput, hashtagInput: hashtagInput, descriptionInput: descriptionInput, pristine, slider: slider, imagePreview: imagePreview, scaleValue: scaleValue, scaleHidden: scaleHidden }));
 
   document.addEventListener('keydown', (evt) => {
@@ -133,7 +125,6 @@ const formValidation = () => {
     }
   });
 
-  // Отправка формы
   form.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
@@ -158,6 +149,5 @@ const formValidation = () => {
     }
   });
 };
-
 
 export { formValidation, closeForm };
