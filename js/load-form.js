@@ -18,7 +18,6 @@ const closeForm = (elements) => {
   hashtagInput.value = '';
   descriptionInput.value = '';
   pristine.reset();
-  //slider.noUiSlider.set([100]);
   imagePreview.style.filter = '';
   imagePreview.style.transform = 'scale(1)';
   elements.scaleValue.value = `${INIT_SCALE}%`;
