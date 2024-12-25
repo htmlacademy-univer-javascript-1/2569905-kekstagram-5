@@ -11,14 +11,14 @@ const HASHTAG_PATTERN = /^#[A-Za-z0-9]+$/;
 const BASE_URL = 'https://29.javascript.htmlacademy.pro/kekstagram';
 
 const closeForm = (elements) => {
-  const { overlay, body, uploadInput, hashtagInput, descriptionInput, pristine, slider, imagePreview } = elements;
+  const { overlay, body, uploadInput, hashtagInput, descriptionInput, pristine, /*slider*/ imagePreview } = elements;
   overlay.classList.add('hidden');
   body.classList.remove('modal-open');
   uploadInput.value = '';
   hashtagInput.value = '';
   descriptionInput.value = '';
   pristine.reset();
-  slider.noUiSlider.set([100]);
+  //slider.noUiSlider.set([100]);
   imagePreview.style.filter = '';
   imagePreview.style.transform = 'scale(1)';
   elements.scaleValue.value = `${INIT_SCALE}%`;
@@ -78,9 +78,17 @@ const formValidation = () => {
   effectsRadio.forEach((radio) => {
     radio.addEventListener('change', () => {
       const effect = radio.value;
-      slider.noUiSlider.set([100]);
-      effectValueInport.value = 100;
-      applyEffect(imagePreview, effect, 100);
+      if (effect === 'none') {
+        slider.classList.add('hidden');
+        document.querySelector('.img-upload__effect-level').classList.add('hidden');
+        imagePreview.style.filter = '';
+      } else {
+        slider.classList.remove('hidden');
+        document.querySelector('.img-upload__effect-level').classList.remove('hidden');
+        slider.noUiSlider.set([100]);
+        effectValueInport.value = 100;
+        applyEffect(imagePreview, effect, 100);
+      }
     });
   });
 
@@ -115,6 +123,14 @@ const formValidation = () => {
       };
       reader.readAsDataURL(file);
     }
+    effectsRadio.forEach((radio) => {
+      if (radio.value === 'none') {
+        radio.checked = true;
+      }
+    });
+    slider.classList.add('hidden');
+    document.querySelector('.img-upload__effect-level').classList.add('hidden');
+    imagePreview.style.filter = '';
   });
 
   cancelButton.addEventListener('click', () => closeForm({ overlay: overlay, body: body, uploadInput: uploadInput, hashtagInput: hashtagInput, descriptionInput: descriptionInput, pristine, slider: slider, imagePreview: imagePreview, scaleValue: scaleValue, scaleHidden: scaleHidden }));
@@ -140,6 +156,7 @@ const formValidation = () => {
           if (response.ok) {
             closeForm({ overlay: overlay, body: body, uploadInput: uploadInput, hashtagInput: hashtagInput, descriptionInput: descriptionInput, pristine, slider: slider, imagePreview: imagePreview, scaleValue: scaleValue, scaleHidden: scaleHidden });
             showSuccessForm();
+            submitButton.disabled = false;
           } else {
             showErrorForm('Ошибка отправки данных');
           }
