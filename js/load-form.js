@@ -1,5 +1,5 @@
 import { applyEffect, form } from './effects.js';
-import { showSuccessForm, showErrorForm } from './result-massage.js';
+import { showSuccessForm, showErrorForm } from './result-message.js';
 
 const INIT_SCALE = 100;
 const SCALE_STEP = 25;
@@ -9,6 +9,8 @@ const MAX_COMMENT_LENGTH = 140;
 const MAX_HASHTAGS = 5;
 const HASHTAG_PATTERN = /^#[A-Za-z0-9]+$/;
 const BASE_URL = 'https://29.javascript.htmlacademy.pro/kekstagram';
+
+let currentScale = INIT_SCALE;
 
 const closeForm = (elements) => {
   const { overlay, body, uploadInput, hashtagInput, descriptionInput, pristine, /*slider*/ imagePreview } = elements;
@@ -22,6 +24,7 @@ const closeForm = (elements) => {
   imagePreview.style.transform = 'scale(1)';
   elements.scaleValue.value = `${INIT_SCALE}%`;
   elements.scaleHidden.value = INIT_SCALE;
+  currentScale = INIT_SCALE;
 };
 
 const formValidation = () => {
@@ -37,8 +40,6 @@ const formValidation = () => {
   const slider = document.querySelector('.effect-level__slider');
   const effectValueInport = document.querySelector('.effect-level__value');
   const effectsRadio = document.querySelectorAll('.effects__radio');
-
-  let currentScale = INIT_SCALE;
 
   const pristine = new Pristine(form, {
     classTo: 'form-group',
@@ -135,8 +136,12 @@ const formValidation = () => {
   cancelButton.addEventListener('click', () => closeForm({ overlay: overlay, body: body, uploadInput: uploadInput, hashtagInput: hashtagInput, descriptionInput: descriptionInput, pristine, slider: slider, imagePreview: imagePreview, scaleValue: scaleValue, scaleHidden: scaleHidden }));
 
   document.addEventListener('keydown', (evt) => {
-    if (evt.key === 'Escape' && ![uploadInput, hashtagInput, descriptionInput].includes(document.activeElement)) {
-      closeForm({ overlay: overlay, body: body, uploadInput: uploadInput, hashtagInput: hashtagInput, descriptionInput: descriptionInput, pristine, slider: slider, imagePreview: imagePreview, scaleValue: scaleValue, scaleHidden: scaleHidden });
+    if (evt.key === 'Escape') {
+      if (document.activeElement === hashtagInput ||
+          document.activeElement === descriptionInput) {
+        return;
+      }
+      closeForm({ overlay, body, uploadInput, hashtagInput, descriptionInput, pristine, slider, imagePreview, scaleValue, scaleHidden });
     }
   });
 
@@ -156,6 +161,7 @@ const formValidation = () => {
             closeForm({ overlay: overlay, body: body, uploadInput: uploadInput, hashtagInput: hashtagInput, descriptionInput: descriptionInput, pristine, slider: slider, imagePreview: imagePreview, scaleValue: scaleValue, scaleHidden: scaleHidden });
             showSuccessForm();
             submitButton.disabled = false;
+            currentScale = INIT_SCALE;
           } else {
             showErrorForm('Ошибка отправки данных');
           }
