@@ -1,9 +1,8 @@
 const renderBigPicture = function (picture) {
   const bigPicture = document.querySelector('.big-picture');
   const body = document.body;
-
-  const img = bigPicture.querySelector('.big-picture__img img');
-  const caption = bigPicture.querySelector('.social__caption');
+  const bigPictureImg = bigPicture.querySelector('.big-picture__img img');
+  const pictureCaption = bigPicture.querySelector('.social__caption');
   const likesCount = bigPicture.querySelector('.likes-count');
   const commentsCount = bigPicture.querySelector('.comments-count');
   const commentsList = bigPicture.querySelector('.social__comments');
@@ -13,9 +12,9 @@ const renderBigPicture = function (picture) {
   commentCountContainer.classList.remove('hidden');
   commentsLoader.classList.remove('hidden');
 
-  img.src = picture.url;
-  img.alt = picture.description;
-  caption.textContent = picture.description;
+  bigPictureImg.src = picture.url;
+  bigPictureImg.alt = picture.description;
+  pictureCaption.textContent = picture.description;
   likesCount.textContent = `${picture.likes}`;
   commentsCount.textContent = `${picture.comments.length}`;
 
@@ -52,7 +51,6 @@ const renderBigPicture = function (picture) {
   showComments();
 
   commentsLoader.addEventListener('click', showComments);
-
 
   bigPicture.classList.remove('hidden');
   body.classList.add('modal-open');

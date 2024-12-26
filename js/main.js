@@ -1,17 +1,22 @@
-import './util.js';
-import {createPost} from './constants.js';
-import {renderPictures} from './picture.js';
-import {renderBigPicture} from './big-picture.js';
-
-
-const posts = [];
-for (let i = 0; i < 25; i++) {
-  posts.push(createPost());
-}
-
-renderPictures(posts);
+/* eslint-disable no-alert */
+import { renderPictures } from './pictures-render.js';
+import { renderBigPicture } from './big-picture-render.js';
+import { formValidation } from './load-form.js';
+import { getData } from './api.js';
 
 const picturesContainer = document.querySelector('.pictures');
+let posts = [];
+
+const fetchPosts = async () => {
+  try {
+    posts = await getData();
+    renderPictures(posts);
+  } catch (error) {
+    alert('Не удалось загрузить фотографии. Попробуйте позже.');
+  }
+};
+
+fetchPosts();
 
 const handlePictureClick = function(evt) {
   const pictureElement = evt.target.closest('.picture');
@@ -26,4 +31,5 @@ const handlePictureClick = function(evt) {
 
 picturesContainer.addEventListener('click', handlePictureClick);
 
+formValidation();
 
